@@ -52,7 +52,7 @@
 
 (defclass $regle ()
 (($conditions :accessor ?cond :initarg :cond :type list)
-($resultats :accessor ?res :initarg :res :type list))
+($resultat :accessor ?res :initarg :res :type $mobile))
 )
 
 ; 3 TYPES DE REGLES :
