@@ -1,7 +1,10 @@
+(setq BF nil)
+
 (defclass $mobile ()
 (($nom :accessor ?nom :initarg :nom)
 ($prix :accessor ?prix :initarg :prix :type int)
 ($taille :accessor ?taille :initarg :taille :type float)
+($version :accessor ?version :initarg :version :type int)
 ($stockage :accessor ?stockage :initarg :stockage :type int)
 ($system :accessor ?systeme :initarg :systeme)
 ($annee :accessor ?annee :initarg :annee :type int)
@@ -15,47 +18,54 @@
 (setq mob6 (make-instance '$mobile :nom "OnePlus One" :prix 300 :taille 5.5 :stockage 64 :systeme 'android :annee 2014))
 (setq mob7 (make-instance '$mobile :nom "HTC One Mini 2" :prix 450 :taille 4.5 :stockage 16 :systeme 'android :annee 2014))
 (setq mob8 (make-instance '$mobile :nom "Xiaomi MI4" :prix 400 :taille 5 :stockage 64 :systeme 'android :annee 2014))
-(setq mob9 (make-instance '$mobile :nom "iPhone 6" :prix 700 :taille 4.7 :stockage 16 :systeme 'ios :annee 2014))
-(setq mob10 (make-instance '$mobile :nom "iPhone 6 Plus" :prix 800 :taille 5.5 :stockage 16 :systeme 'ios :annee 2014))
+(setq mob9 (make-instance '$mobile :nom "iPhone 6" :prix 700 :taille 4.7 :stockage 16 :systeme 'ios :annee 2014 :version 8))
+(setq mob10 (make-instance '$mobile :nom "iPhone 6 Plus" :prix 800 :taille 5.5 :version 8 :stockage 16 :systeme 'ios :annee 2014))
 (setq mob11 (make-instance '$mobile :nom "Nokia Lumia 930" :prix 550 :taille 5 :stockage 32 :systeme 'wphone :annee 2014))
 (setq mob12 (make-instance '$mobile :nom "Nokia Lumia 925" :prix 600 :taille 4.5 :stockage 16 :systeme 'wphone :annee 2013))
 (setq mob13 (make-instance '$mobile :nom "Google Nexus 5" :prix 350 :taille 5 :stockage 16 :systeme 'android :annee 2013))
 (setq mob14 (make-instance '$mobile :nom "Motorola Moto X" :prix 430 :taille 4.7 :stockage 16 :systeme 'android :annee 2014))
 (setq mob15 (make-instance '$mobile :nom "HTC One M8" :prix 680 :taille 5 :stockage 16 :systeme 'android :annee 2014))
+(setq mob16 (make-instance '$mobile :nom "iPhone 4" :prix 700 :taille 3.5 :stockage 16 :systeme 'ios :version 7 :annee 2010))
+(setq mob17 (make-instance '$mobile :nom "iPhone 6 Plus" :prix 900 :taille 5.5 :version 8 :stockage 64 :systeme 'ios :annee 2014))
+(setq mob18 (make-instance '$mobile :nom "iPhone 4S" :prix 700 :taille 3.5 :stockage 16 :systeme 'ios :version 8 :annee 2011))
 
-(setq listeSmartphone (list mob1 mob2 mob3 mob4 mob5 mob6 mob7 mob8 mob9 mob10 mob11 mob12 mob13 mob14 mob15))
+(setq listeSmartphone (list mob1 mob2 mob3 mob4 mob5 mob6 mob7 mob8 mob9 mob10 mob11 mob12 mob13 mob14 mob15 mob16 mob17 mob18))
 
 (defclass $regle ()
 (($conditions :accessor ?cond :initarg :cond :type list)
 ($resultat :accessor ?res :initarg :res :type $mobile))
 )
 
-; on commence par initialiser les règles prioritaires
+; on étudie d'abord les règles prioritaires
 
-(setq regle1 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'prix (?prix mob9)) (list 'num 'taille (?taille mob9))) :res mob9))
-(setq regle2 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'prix (?prix mob10)) (list 'num 'taille (?taille mob10))) :res mob10))
-(setq regle3 (make-instance '$regle :cond (list (list 'bool 'ios 'non) (list 'bool 'android 'present) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob4)) (list 'num 'prix (?prix mob4)) (list 'num 'taille (?taille mob4))) :res mob4))
-(setq regle4 (make-instance '$regle :cond (list (list 'bool 'ios 'non) (list 'bool 'android 'present) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob13)) (list 'num 'prix (?prix mob13)) (list 'num 'taille (?taille mob13))) :res mob13))
+(setq regle1 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob9)) (list 'num 'stockage (?stockage mob9)) (list 'num 'systeme (?systeme mobi9)) (list 'num 'prix (?prix mob9)) (list 'num 'taille (?taille mob9))) :res mob9))
+(setq regle2 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob10)) (list 'num 'stockage (?stockage mob10)) (list 'num 'systeme (?systeme mobi10)) (list 'num 'prix (?prix mob10)) (list 'num 'taille (?taille mob10))) :res mob10))
+(setq regle3 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob16)) (list 'num 'stockage (?stockage mob16)) (list 'num 'systeme (?systeme mobi16)) (list 'num 'prix (?prix mob16)) (list 'num 'taille (?taille mob16))) :res mob16))
+(setq regle4 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob17)) (list 'num 'stockage (?stockage mob17)) (list 'num 'systeme (?systeme mobi17)) (list 'num 'prix (?prix mob17)) (list 'num 'taille (?taille mob17))) :res mob17))
+(setq regle24 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob18)) (list 'num 'stockage (?stockage mob18)) (list 'num 'systeme (?systeme mobi18)) (list 'num 'prix (?prix mob18)) (list 'num 'taille (?taille mob18))) :res mob18))
 
 ; on passe aux règles communes
 
-(setq regle5 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob1)) (list 'num 'annee (?annee mob1)) (list 'num 'stockage (?stockage mob1)) (list 'num 'taille (?taille mob1))) :res mob1))
-(setq regle6 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob2)) (list 'num 'annee (?annee mob2)) (list 'num 'stockage (?stockage mob2)) (list 'num 'taille (?taille mob2))) :res mob2))
-(setq regle7 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob3)) (list 'num 'annee (?annee mob3)) (list 'num 'stockage (?stockage mob3)) (list 'num 'taille (?taille mob3))) :res mob3))
-(setq regle8 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob4)) (list 'num 'annee (?annee mob4)) (list 'num 'stockage (?stockage mob4)) (list 'num 'taille (?taille mob4))) :res mob4))
-(setq regle9 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob5)) (list 'num 'annee (?annee mob5)) (list 'num 'stockage (?stockage mob5)) (list 'num 'taille (?taille mob5))) :res mob5))
-(setq regle10 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob6)) (list 'num 'annee (?annee mob6)) (list 'num 'stockage (?stockage mob6)) (list 'num 'taille (?taille mob6))) :res mob6))
-(setq regle11 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob7)) (list 'num 'annee (?annee mob7)) (list 'num 'stockage (?stockage mob7)) (list 'num 'taille (?taille mob7))) :res mob7))
-(setq regle12 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob8)) (list 'num 'annee (?annee mob8)) (list 'num 'stockage (?stockage mob8)) (list 'num 'taille (?taille mob8))) :res mob8))
-(setq regle13 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'prix (?prix mob9)) (list 'num 'annee (?annee mob9)) (list 'num 'stockage (?stockage mob9)) (list 'num 'taille (?taille mob9))) :res mob9))
-(setq regle14 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'prix (?prix mob10)) (list 'num 'annee (?annee mob10)) (list 'num 'stockage (?stockage mob10)) (list 'num 'taille (?taille mob10))) :res mob10))
-(setq regle15 (make-instance '$regle :cond (list (list 'bool 'wphone 'present) (list 'num 'prix (?prix mob11)) (list 'num 'annee (?annee mob11)) (list 'num 'stockage (?stockage mob11)) (list 'num 'taille (?taille mob11))) :res mob11))
-(setq regle16 (make-instance '$regle :cond (list (list 'bool 'wphone 'present) (list 'num 'prix (?prix mob12)) (list 'num 'annee (?annee mob12)) (list 'num 'stockage (?stockage mob12)) (list 'num 'taille (?taille mob12))) :res mob12))
-(setq regle17 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob13)) (list 'num 'annee (?annee mob13)) (list 'num 'stockage (?stockage mob13)) (list 'num 'taille (?taille mob13))) :res mob13))
-(setq regle18 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob14)) (list 'num 'annee (?annee mob14)) (list 'num 'stockage (?stockage mob14)) (list 'num 'taille (?taille mob14))) :res mob14))
-(setq regle19 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'prix (?prix mob15)) (list 'num 'annee (?annee mob15)) (list 'num 'stockage (?stockage mob15)) (list 'num 'taille (?taille mob15))) :res mob15))
+(setq regle5 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob1)) (list 'num 'stockage (?stockage mob1)) (list 'num 'prix (?prix mob1)) (list 'num 'taille (?taille mob1))) :res mob1))
+(setq regle6 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob2)) (list 'num 'stockage (?stockage mob2)) (list 'num 'prix (?prix mob2)) (list 'num 'taille (?taille mob2))) :res mob2))
+(setq regle7 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob3)) (list 'num 'stockage (?stockage mob3)) (list 'num 'prix (?prix mob3)) (list 'num 'taille (?taille mob3))) :res mob3))
+(setq regle8 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob4)) (list 'num 'stockage (?stockage mob4)) (list 'num 'prix (?prix mob4)) (list 'num 'taille (?taille mob4))) :res mob4))
+(setq regle9 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'bool 'hres 'non) (list 'num 'annee (?annee mob5)) (list 'num 'stockage (?stockage mob5)) (list 'num 'prix (?prix mob5)) (list 'num 'taille (?taille mob5))) :res mob5))
+(setq regle10 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob6)) (list 'num 'stockage (?stockage mob6)) (list 'num 'prix (?prix mob6)) (list 'num 'taille (?taille mob6))) :res mob6))
+(setq regle11 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'bool 'hres 'non) (list 'num 'annee (?annee mob7)) (list 'num 'stockage (?stockage mob7)) (list 'num 'prix (?prix mob7)) (list 'num 'taille (?taille mob7))) :res mob7))
+(setq regle12 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob8)) (list 'num 'stockage (?stockage mob8)) (list 'num 'prix (?prix mob8)) (list 'num 'taille (?taille mob8))) :res mob8))
+(setq regle13 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob9)) (list 'num 'version (?version mob9)) (list 'num 'stockage (?stockage mob9)) (list 'num 'prix (?prix mob9)) (list 'num 'taille (?taille mob9))) :res mob9))
+(setq regle14 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob10)) (list 'num 'version (?version mob10)) (list 'num 'stockage (?stockage mob10)) (list 'num 'prix (?prix mob10)) (list 'num 'taille (?taille mob10))) :res mob10))
+(setq regle15 (make-instance '$regle :cond (list (list 'bool 'wphone 'present) (list 'num 'annee (?annee mob11)) (list 'num 'stockage (?stockage mob11)) (list 'num 'prix (?prix mob11)) (list 'num 'taille (?taille mob11))) :res mob11))
+(setq regle16 (make-instance '$regle :cond (list (list 'bool 'wphone 'present) (list 'num 'annee (?annee mob12)) (list 'num 'stockage (?stockage mob12)) (list 'num 'prix (?prix mob12)) (list 'num 'taille (?taille mob12))) :res mob12))
+(setq regle17 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob13)) (list 'num 'stockage (?stockage mob13)) (list 'num 'prix (?prix mob13)) (list 'num 'taille (?taille mob13))) :res mob13))
+(setq regle18 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob14)) (list 'num 'stockage (?stockage mob14)) (list 'num 'prix (?prix mob14)) (list 'num 'taille (?taille mob14))) :res mob14))
+(setq regle19 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob15)) (list 'num 'stockage (?stockage mob15)) (list 'num 'prix (?prix mob15)) (list 'num 'taille (?taille mob15))) :res mob15))
+(setq regle21 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob16)) (list 'num 'version (?version mob16)) (list 'num 'stockage (?stockage mob16)) (list 'num 'prix (?prix mob16)) (list 'num 'taille (?taille mob16))) :res mob16))
+(setq regle22 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob17)) (list 'num 'version (?version mob17)) (list 'num 'stockage (?stockage mob17)) (list 'num 'prix (?prix mob17)) (list 'num 'taille (?taille mob17))) :res mob17))
+(setq regle23 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob18)) (list 'num 'version (?version mob18)) (list 'num 'stockage (?stockage mob18)) (list 'num 'prix (?prix mob18)) (list 'num 'taille (?taille mob18))) :res mob18))
 
-(setq BR (list regle1 regle2 regle3 regle4 regle5 regle6 regle7 regle8 regle9 regle10 regle11 regle12 regle13 regle14 regle15 regle16 regle17 regle18 regle19))
+(setq BR (list regle1 regle2 regle3 regle4 regle24 regle5 regle6 regle7 regle8 regle9 regle10 regle11 regle12 regle13 regle14 regle15 regle16 regle17 regle18 regle19 regle21 regle22 regle23))
 
 ; ON A RAJOUTE LES REGLES ET LA BASE DE DONNEES DE SMARTPHONES
 
@@ -74,10 +84,12 @@
 
 (defun genererBF ()
 (setq BF nil) ; on définit BF comme une variable lexicale, qu'on réinitialise chaque fois qu'on lance le programme
-(print "Un Android vous convient-il ? (oui/*)")
-    (if (eq (read) 'oui) (setq BF (cons 'android BF)))
     (print "Un iOS vous convient-il ? (oui/*)")
     (if (eq (read) 'oui) (setq BF (cons 'ios BF)))
+	(print "Un Android vous convient-il ? (oui/*)")
+    (if (eq (read) 'oui) (progn (setq BF (cons 'android BF))
+    (print "Dans le cas d'un Android, souhaitez-vous un écran haute résolution ? (supérieure à 350ppp) (oui/*)")
+    (if (eq (read) 'oui) (setq BF (cons 'hres BF)))))
     (print "Un Windows Phone vous convient-il ? (oui/*)")
     (if (eq (read) 'oui) (setq BF (cons 'wphone BF)))
 )
@@ -86,10 +98,11 @@
 ; ELLE NE REND RIEN MAIS SI LA REGLE EST VERIFIEE GRÂCE A CONDVERIF, ELLE APPELLE LA FONCTION APPLIQUER
 
 (defun verifierRegle (regle)
+(if (not (member (?nom (?res regle)) BF))
 (let ((verif "oui") (listeConditions (?cond regle)))
 (loop for condition in listeConditions while (equal verif "oui") do
 (if (null (condVerif condition)) (setq verif "non")))
-(if (equal verif "oui") (appliquer (?res regle)))))
+(if (equal verif "oui") (appliquer (?res regle))))))
 
 ; SIPRESENT prend en paramètre un mobile, et vérifie si son nom est présent dans BF.
 ; FONCTIONNE
@@ -122,8 +135,8 @@ present))
 (defun condVerif (condition)
 (cond ((and (equal (car condition) 'bool) (equal (caddr condition) 'present)) (if (member (cadr condition) BF) T nil))
 		((and (equal (car condition) 'bool) (equal (caddr condition) 'non)) (if (member (cadr condition) BF) nil T))
-		((and (equal (car condition) 'num) (equal (cadr condition) 'annee)) (condVerifNumEgal condition))
-		((and (equal (car condition) 'num) (not (equal (cadr condition) 'annee))) (condVerifNum condition))
+		((or (and (equal (car condition) 'num) (equal (cadr condition) 'annee)) (and (equal (car condition) 'num) (equal (cadr condition) 'version))) (condVerifNumEgal condition))
+		((and (equal (car condition) 'num) (not (equal (cadr condition) 'annee)) (not (equal (cadr condition) 'version))) (condVerifNum condition))
 		(T nil)
 ))
 
@@ -177,6 +190,8 @@ val))
 
 (defun demanderUserEgal (intit)
 (let (val)
-(format t "Indiquez l'année de sortie voulue. > ")
+(cond
+((equal intit 'annee) (format t "Indiquez l'année de sortie voulue. > "))
+((equal intit 'version) (format t "Indiquez la version d'iOS voulue pour un appareil iOS. > ")))
 (setq val (read))
 (setq BF (cons (list intit val) BF))))
