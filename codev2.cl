@@ -36,14 +36,6 @@
 ($resultat :accessor ?res :initarg :res :type $mobile))
 )
 
-; on étudie d'abord les règles prioritaires
-
-(setq regle1 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob9)) (list 'num 'stockage (?stockage mob9)) (list 'num 'systeme (?systeme mobi9)) (list 'num 'prix (?prix mob9)) (list 'num 'taille (?taille mob9))) :res mob9))
-(setq regle2 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob10)) (list 'num 'stockage (?stockage mob10)) (list 'num 'systeme (?systeme mobi10)) (list 'num 'prix (?prix mob10)) (list 'num 'taille (?taille mob10))) :res mob10))
-(setq regle3 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob16)) (list 'num 'stockage (?stockage mob16)) (list 'num 'systeme (?systeme mobi16)) (list 'num 'prix (?prix mob16)) (list 'num 'taille (?taille mob16))) :res mob16))
-(setq regle4 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob17)) (list 'num 'stockage (?stockage mob17)) (list 'num 'systeme (?systeme mobi17)) (list 'num 'prix (?prix mob17)) (list 'num 'taille (?taille mob17))) :res mob17))
-(setq regle24 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'bool 'android 'non) (list 'bool 'wphone 'non) (list 'num 'annee (?annee mob18)) (list 'num 'stockage (?stockage mob18)) (list 'num 'systeme (?systeme mobi18)) (list 'num 'prix (?prix mob18)) (list 'num 'taille (?taille mob18))) :res mob18))
-
 ; on passe aux règles communes
 
 (setq regle5 (make-instance '$regle :cond (list (list 'bool 'android 'present) (list 'num 'annee (?annee mob1)) (list 'num 'stockage (?stockage mob1)) (list 'num 'prix (?prix mob1)) (list 'num 'taille (?taille mob1))) :res mob1))
@@ -65,7 +57,7 @@
 (setq regle22 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob17)) (list 'num 'version (?version mob17)) (list 'num 'stockage (?stockage mob17)) (list 'num 'prix (?prix mob17)) (list 'num 'taille (?taille mob17))) :res mob17))
 (setq regle23 (make-instance '$regle :cond (list (list 'bool 'ios 'present) (list 'num 'annee (?annee mob18)) (list 'num 'version (?version mob18)) (list 'num 'stockage (?stockage mob18)) (list 'num 'prix (?prix mob18)) (list 'num 'taille (?taille mob18))) :res mob18))
 
-(setq BR (list regle1 regle2 regle3 regle4 regle24 regle5 regle6 regle7 regle8 regle9 regle10 regle11 regle12 regle13 regle14 regle15 regle16 regle17 regle18 regle19 regle21 regle22 regle23))
+(setq BR (list regle5 regle6 regle7 regle8 regle9 regle10 regle11 regle12 regle13 regle14 regle15 regle16 regle17 regle18 regle19 regle21 regle22 regle23))
 
 ; ON A RAJOUTE LES REGLES ET LA BASE DE DONNEES DE SMARTPHONES
 
@@ -88,7 +80,7 @@
     (if (eq (read) 'oui) (setq BF (cons 'ios BF)))
 	(print "Un Android vous convient-il ? (oui/*)")
     (if (eq (read) 'oui) (progn (setq BF (cons 'android BF))
-    (print "Dans le cas d'un Android, souhaitez-vous un écran haute résolution ? (supérieure à 350ppp) (oui/*)")
+    (print "Dans le cas d'un Android, souhaitez-vous spécifiquement un écran haute résolution ? (supérieure à 350ppp) (oui/*)")
     (if (eq (read) 'oui) (setq BF (cons 'hres BF)))))
     (print "Un Windows Phone vous convient-il ? (oui/*)")
     (if (eq (read) 'oui) (setq BF (cons 'wphone BF)))
