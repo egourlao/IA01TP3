@@ -64,11 +64,9 @@
 ; ON PASSE AUX FONCTIONS
 
 (defun sysExpert ()
-(let ((BFtemp BF)) ; puisqu'on va se servir de la variable lexicale BF, on la sauvegarde pendant l'exécution du programme
 (genererBF)
 (loop for i in BR do (verifierRegle i))
 (afficherTels)
-(setq BF BFtemp)) ; on remplace la valeur initiale de BF
 )
 
 ; GENERERBF réinitialise BF puis lui attribue ses valeurs booléennes de système
@@ -90,11 +88,14 @@
 ; ELLE NE REND RIEN MAIS SI LA REGLE EST VERIFIEE GRÂCE A CONDVERIF, ELLE APPELLE LA FONCTION APPLIQUER
 
 (defun verifierRegle (regle)
-(if (not (member (?nom (?res regle)) BF))
-(let ((verif "oui") (listeConditions (?cond regle)))
-(loop for condition in listeConditions while (equal verif "oui") do
-(if (null (condVerif condition)) (setq verif "non")))
-(if (equal verif "oui") (appliquer (?res regle))))))
+	(if (not (siPresent (?res regle)))
+		(let ((verif "oui") (listeConditions (?cond regle)))
+			(loop for condition in listeConditions while (equal verif "oui") do
+			(if (null (condVerif condition)) (setq verif "non")))
+			(if (equal verif "oui") (appliquer (?res regle)))
+		)
+	)
+)
 
 ; SIPRESENT prend en paramètre un mobile, et vérifie si son nom est présent dans BF.
 ; FONCTIONNE
@@ -109,10 +110,20 @@ present))
 ; FONCTIONNE
 
 (defun afficherTels ()
-(let (affiche)
-(loop for tel in listeSmartphone do
-(if (siPresent tel) (progn (format t "Voici un téléphone qui correspond à vos attentes : ~%~a.~%" (?nom tel) (?stockage tel) (?taille tel) (?annee tel) (?prix tel)) (setq affiche t))))
-(if (null affiche) (format t "Aucun téléphone de la base de données ne correspond à vos critères.~%"))))
+	(let (affiche tel)
+		(loop for i in BF do
+			(setq tel nil)
+			(loop for j in listeSmartphone while (null tel) do
+				(if (equal (?nom j) i) (progn
+					(progn (format t "Voici un téléphone qui correspond à vos attentes : ~%~a.~%" (?nom j)))
+					(setq affiche t)
+					(setq tel t)
+				))
+			)
+		)
+		(if (null affiche) (format t "Aucun téléphone de la base de données ne correspond à vos critères.~%"))
+	)
+)
 
 ; APPLIQUER applique la règle ; dans le cas présent, elle rajoute le nom du mobile à BF, pour indiquer qu'il correspond aux critères.
 ; FONCTIONNE
